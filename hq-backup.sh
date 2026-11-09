@@ -27,7 +27,7 @@ DB_FAILED=0
 
 if [ -n "$DB_NAME" ]; then
   set +e
-  MYSQL_PWD="$DB_PASS" mysqldump -h"$DB_HOST" -u"$DB_USER" --single-transaction --quick "$DB_NAME" \
+  MYSQL_PWD="$DB_PASS" mysqldump -h"$DB_HOST" -u"$DB_USER" --single-transaction --quick --no-tablespaces "$DB_NAME" \
     | gzip \
     | curl -sS --fail --ftp-create-dirs -u "$FTP_USER:$FTP_PASS" -T - "$FTP_BASE/db_$N.sql.gz"
   DB_RC=("${PIPESTATUS[@]}")
